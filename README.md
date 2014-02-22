@@ -1,4 +1,4 @@
 Naval Battle
 =====
 
-Apenas testando
+Jogo de Batalha Naval - Apenas para estudos
