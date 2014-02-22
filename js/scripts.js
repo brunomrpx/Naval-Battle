@@ -11,6 +11,7 @@ var divContent = document.getElementById("content"),
 	divMachinePoints = document.getElementById("machinePoints"),
 	machineTable = document.getElementById("machineTable"),
 	playerTable = document.getElementById("playerTable"),
+	divShips = document.getElementById("ships"),
 	gameStarted = false,
 	gameOver = false;
 
@@ -141,7 +142,7 @@ var GameBoard = function() {
 	/*
 	* Faz a jogada da máquina e atualiza o tabuleiro indicado
 	*/
-	this.machineTurn = function(playerGameBoard) {
+	this.machineTurn = function(playerGameBoard, machineGameBoard) {
 		var 
 			cell,
 			flag = true;
@@ -152,13 +153,25 @@ var GameBoard = function() {
 			if (cell.className == "ship") {
 				cell.className = "bomb";
 				playerGameBoard.points--;
+
+				machineGameBoard.result.className = "bomb-message";
+				machineGameBoard.result.innerHTML = "Acertou!";		
 				break;
 			} else if (cell.className == "") {				
 				cell.className = "water";
+
+				machineGameBoard.result.className = "water-message";
+				machineGameBoard.result.innerHTML = "Água!";
 				break;
 			} 
 
 		} while(flag);
+
+		divPlayerGameBoard.insertBefore(machineGameBoard.result, playerTable);
+		setTimeout(function() {
+			divPlayerGameBoard.removeChild(machineGameBoard.result);
+			machineGameBoard.result.className = "";
+		},600);
 
 	};
 
@@ -194,7 +207,7 @@ var GameBoard = function() {
 					playerGameBoard.result.className = "";
 				},600);	
 				
-				playerGameBoard.machineTurn(playerGameBoard);						
+				playerGameBoard.machineTurn(playerGameBoard, machineGameBoard);						
 			}
 						
 		}
@@ -248,6 +261,8 @@ var GameBoard = function() {
 				ships++;
 			}			
 
+			divShips.innerHTML = ships;		
+
 			if (ships == 0) {
 				divStartGame.style.display = "block";
 			} else {
@@ -300,7 +315,10 @@ var GameBoard = function() {
 function startGame(machineGameBoard, playerGameBoard) {	
 	gameStarted = true;
 
-	var defaultGameBoard = new GameBoard();
+	var 
+		defaultGameBoard = new GameBoard(),
+		restartButton,
+		run;
 	
 		divMachineGameBoard.appendChild(
 			defaultGameBoard.createDefaultGameBoard(
@@ -313,7 +331,7 @@ function startGame(machineGameBoard, playerGameBoard) {
 
 		//defaultGameBoard.showShips(machineGameBoard);
 
-		var run = setInterval(function() {
+		run = setInterval(function() {
 			divPlayerPoints.innerHTML = playerGameBoard.points;
 			divPlayerPoints.style.display = "inline";
 
@@ -329,8 +347,19 @@ function startGame(machineGameBoard, playerGameBoard) {
 					mensagem = "Derrota.";
 				}
 
+				restartButton = document.createElement("button");
+				restartButton.className = "button";				
+				restartButton.innerHTML = "Jogar Novamente";
+
 				gameOver = true;
-				divInteraction.innerHTML = mensagem;
+				divInteraction.innerHTML = mensagem + "<br/>";
+
+				restartButton.onclick = function() {
+					window.location = location.href;
+				}
+
+				divInteraction.appendChild(restartButton);
+
 				clearInterval(run);				
 			}
 

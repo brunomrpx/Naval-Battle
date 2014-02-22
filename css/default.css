@@ -57,6 +57,17 @@ header{
 	float: left;	
 }
 
+.button {
+	background-color: #000000;
+	color: #FFFFFF;
+	border: none;	
+	padding: 15px;
+}
+
+.button:hover {
+	background-color: #707070;
+}
+
 .points {
 	padding: 10px;
 	background-color: #000000;
