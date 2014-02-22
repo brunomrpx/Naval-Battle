@@ -1,0 +1,104 @@
+body, table, header {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font-family: 'Varela Round', sans-serif;	
+}
+
+header{
+	background-color: #000000;
+	color: #FFFFFF;
+	position: fixed;
+	top: 0px;
+	width: 100%;	
+	padding: 20px;
+}
+
+#content {
+	width: 1300px;
+	margin: 0 auto;		
+	margin-top: 180px;
+}
+
+#content table td {
+	border: 2px solid #000000;	
+	width: 35px;
+	height: 35px;	
+}
+
+#content table {
+	width: 440px;
+	height: 450px;	
+	border-spacing: 0px;	
+	border: 15px solid #191919;
+	margin-top: 15px;
+}
+
+#machineGameBoard {
+	float: left;	
+}
+
+#interaction {
+	float: left;	
+	width: 400px;	
+	height: 450px;
+	text-align: center;	
+	font-size: 25px;
+}
+
+#startGame {
+	display: none;
+	margin: 5px auto;
+}
+
+#playerGameBoard {
+	float: left;	
+}
+
+.points {
+	padding: 10px;
+	background-color: #000000;
+	color: #FFFFFF;
+	display: none;	
+}
+
+.bomb-message {
+	background-color: #980000;
+	color: #FFFFFF;
+	padding: 5px;
+}
+
+.water-message {
+	background-color: #0099CC;
+	color: #FFFFFF;
+	padding: 5px;
+}
+
+.clear-both {
+	clear: both;
+}
+
+.bomb {	
+	background-repeat: no-repeat;
+	background-color: #980000 ;
+}
+
+.ship {	
+	background-repeat: no-repeat;
+	background-color: #000000;
+}
+
+.water {	
+	background-repeat: no-repeat;
+	background-color: #0099CC ;
+}
+
+.coordinates {
+	text-align: center;
+	background-color: #000000;
+	color: #FFFFFF;	
+	width: 35px;
+	height: 35px;
+}
