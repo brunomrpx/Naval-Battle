@@ -1,4 +1,11 @@
-try {
+/*
+*
+* Desenvolvido por Bruno Mayer Paixão
+* GitHub : https://github.com/brunomrpx
+* Facebook: https://www.facebook.com/bruno.mayerpaixao
+*
+*/
+
 /*
 * Definição de variáveis globais
 */
@@ -166,7 +173,7 @@ var GameBoard = function() {
 
 		} while(flag);
 
-		divMachineMessage.className += " float-right";
+		divMachineMessage.className += " float-left";
 		
 		setTimeout(function() {
 			divMachineMessage.innerHTML = "";
@@ -202,7 +209,7 @@ var GameBoard = function() {
 					
 				} 	
 
-				divPlayerMessage.className += " float-left";
+				divPlayerMessage.className += " float-right";
 				//divMachineGameBoard.insertBefore(playerGameBoard.result, divMachinePoints);
 				setTimeout(function() {
 					divPlayerMessage.className = "";
@@ -340,14 +347,12 @@ function startGame(machineGameBoard, playerGameBoard) {
 				machineGameBoard,
 				playerGameBoard	
 			)		
-		);
+		);		
 
 		divInteraction.innerHTML = "";		
 
 		run = setInterval(function() {
-			divPlayerPoints.innerHTML = playerGameBoard.points;
-			divPlayerPoints.className = "points";
-			divPlayerPoints.className += " float-left"
+			divPlayerPoints.innerHTML = playerGameBoard.points;			
 
 			divMachinePoints.innerHTML = machineGameBoard.points;
 			divMachinePoints.className = "points";
@@ -357,9 +362,11 @@ function startGame(machineGameBoard, playerGameBoard) {
 				var mensagem;
 
 				if (machineGameBoard.points == 0) {
-					mensagem = "Vitória!";
+					mensagem = "Vitória!";			
+					divInteraction.className = "win-message";		
 				} else if (playerGameBoard.points == 0) {	
-					defaultGameBoard.showShips(machineGameBoard);				
+					defaultGameBoard.showShips(machineGameBoard);	
+					divInteraction.className = "fail-message";			
 					mensagem = "Derrota.";
 				}
 
@@ -395,7 +402,3 @@ divPlayerGameBoard.appendChild(playerGameBoard.createPlayerGameBoard());
 divStartGame.onclick = function() {
 	startGame(machineGameBoard, playerGameBoard);
 };
-	
-} catch(exception) {
-	alert(exception.message);
-}

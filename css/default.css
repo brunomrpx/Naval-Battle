@@ -44,7 +44,8 @@ footer {
 	width: 400px;
 	height: 410px;	
 	border-spacing: 0px;	
-	border: 15px solid #191919;	
+	border: 15px solid #191919;	,
+	clear: both;
 }
 
 #machineGameBoard {
@@ -136,4 +137,12 @@ footer {
 	color: #FFFFFF;	
 	width: 35px;
 	height: 35px;
+}
+
+.win-message {
+	color: #8cc63e;
+}
+
+.fail-message {
+	color: 	#f7464a;
 }
