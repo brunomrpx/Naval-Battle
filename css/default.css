@@ -16,24 +16,35 @@ header{
 	padding: 20px;
 }
 
+footer {
+	background-color: #000000;
+	color: #FFFFFF;	
+	width: 100%;
+	position: relative;
+	bottom: -22px;
+	left: 0px;
+	padding: 15px 0px;
+	text-align: center;
+}
+
 #content {
-	width: 1300px;
+	width: 1200px;
 	margin: 0 auto;		
 	margin-top: 180px;
+	height: 500px;
 }
 
 #content table td {
 	border: 2px solid #000000;	
-	width: 35px;
-	height: 35px;	
+	width: 20px;
+	height: 20px;	
 }
 
 #content table {
-	width: 440px;
-	height: 450px;	
+	width: 400px;
+	height: 410px;	
 	border-spacing: 0px;	
-	border: 15px solid #191919;
-	margin-top: 15px;
+	border: 15px solid #191919;	
 }
 
 #machineGameBoard {
@@ -42,7 +53,7 @@ header{
 
 #interaction {
 	float: left;	
-	width: 400px;	
+	width: 300px;	
 	height: 450px;
 	text-align: center;	
 	font-size: 25px;
@@ -55,6 +66,10 @@ header{
 
 #playerGameBoard {
 	float: left;	
+}
+
+.align-center {
+	text-align: center;
 }
 
 .button {
@@ -71,20 +86,28 @@ header{
 .points {
 	padding: 10px;
 	background-color: #000000;
-	color: #FFFFFF;
-	display: none;	
+	color: #FFFFFF;	
+	margin-bottom: 5px;
+}
+
+.float-right {
+	float: right;
+}
+
+.float-left {
+	float: left;
 }
 
 .bomb-message {
 	background-color: #980000;
 	color: #FFFFFF;
-	padding: 5px;
+	padding: 10px;
 }
 
 .water-message {
 	background-color: #0099CC;
 	color: #FFFFFF;
-	padding: 5px;
+	padding: 10px;
 }
 
 .clear-both {
@@ -92,18 +115,19 @@ header{
 }
 
 .bomb {	
-	background-repeat: no-repeat;
 	background-color: #980000 ;
 }
 
 .ship {	
-	background-repeat: no-repeat;
 	background-color: #000000;
 }
 
 .water {	
-	background-repeat: no-repeat;
 	background-color: #0099CC ;
+}
+
+.show-ship {
+	background-color: orange;
 }
 
 .coordinates {

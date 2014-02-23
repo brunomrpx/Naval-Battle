@@ -8,10 +8,10 @@ var divContent = document.getElementById("content"),
 	divPlayerGameBoard = document.getElementById("playerGameBoard"),
 	divStartGame = document.getElementById("startGame"),
 	divPlayerPoints = document.getElementById("playerPoints"),
-	divMachinePoints = document.getElementById("machinePoints"),
-	machineTable = document.getElementById("machineTable"),
-	playerTable = document.getElementById("playerTable"),
+	divMachinePoints = document.getElementById("machinePoints"),	
 	divShips = document.getElementById("ships"),
+	divPlayerMessage = document.getElementById("playerMessage"),
+	divMachineMessage = document.getElementById("machineMessage"),
 	gameStarted = false,
 	gameOver = false;
 
@@ -22,8 +22,7 @@ var GameBoard = function() {
 	var ships = 10;
 	this.points = 10;
 	this.letters = "ABCDEFGHIJ";	
-	this.gameBoardTable = "";
-	this.result = document.createElement("span");; 
+	this.gameBoardTable = "";	
 
 	/*
 	* Cria a estrutura do tabuleiro
@@ -66,7 +65,7 @@ var GameBoard = function() {
 	* Cria o tabuleiro com as especificações para interação do jogador
 	*/
 	this.createPlayerGameBoard = function() {
-		this.create().id = "playerTable";
+		this.create();
 		var 
 			cells = this.gameBoardTable.getElementsByTagName("td"),
 			insertShip = this.insertShip;
@@ -84,7 +83,7 @@ var GameBoard = function() {
 	* Cria um tabuleiro com as embarcações posicionadas aleatóriamente
 	*/
 	this.createMachineGameBoard = function() {
-		this.create().id = "machineTable";
+		this.create();
 		var 
 			cells = Array(),
 			cell,
@@ -130,7 +129,7 @@ var GameBoard = function() {
 			for (var j = 0; j < cells.length; j++) {
 				if (cells[j].innerHTML == "" && cells[j].id != "") {					
 					cells[j].onclick = function() {
-						playerTurn(defaultGameBoard, baseGameBoard, this, playerGameBoard);											
+						playerTurn(defaultGameBoard, baseGameBoard, this, playerGameBoard);																	
 					}
 				}
 			}
@@ -154,23 +153,24 @@ var GameBoard = function() {
 				cell.className = "bomb";
 				playerGameBoard.points--;
 
-				machineGameBoard.result.className = "bomb-message";
-				machineGameBoard.result.innerHTML = "Acertou!";		
+				divMachineMessage.className = "bomb-message";
+				divMachineMessage.innerHTML = "Acertou!";		
 				break;
 			} else if (cell.className == "") {				
 				cell.className = "water";
 
-				machineGameBoard.result.className = "water-message";
-				machineGameBoard.result.innerHTML = "Água!";
+				divMachineMessage.className = "water-message";
+				divMachineMessage.innerHTML = "Água!";
 				break;
 			} 
 
 		} while(flag);
 
-		divPlayerGameBoard.insertBefore(machineGameBoard.result, playerTable);
+		divMachineMessage.className += " float-right";
+		
 		setTimeout(function() {
-			divPlayerGameBoard.removeChild(machineGameBoard.result);
-			machineGameBoard.result.className = "";
+			divMachineMessage.innerHTML = "";
+			divMachineMessage.className = "";
 		},600);
 
 	};
@@ -179,33 +179,36 @@ var GameBoard = function() {
 	* Faz a jogada do computador e atualiza o tabuleiro indicado
 	*/
 	this.playerTurn = function(defaultGameBoard, machineGameBoard, cell, playerGameBoard) {
-		if (!gameOver && playerGameBoard.result.className == "") {
+
+		if (!gameOver && divPlayerMessage.className == "") {
 			var
 				number = cell.id.charAt(0),
 				letter = cell.id.charAt(1),
 				target = machineGameBoard.getCell(number, letter),
-				cellDefault = defaultGameBoard.getCell(number, letter);								
+				cellDefault = defaultGameBoard.getCell(number, letter);											
 
 			if(cell.className != "water" && cell.className != "bomb") {
 				if (target.className == "ship") {			
 					cell.className = "bomb";	
 					
-					playerGameBoard.result.className = "bomb-message";
-					playerGameBoard.result.innerHTML = "Acertou!";					
+					divPlayerMessage.className = "bomb-message";
+					divPlayerMessage.innerHTML = "Acertou!";					
 													
 					machineGameBoard.points--;												
 				} else if (target.className == "") {
 					cell.className = "water"		
-					playerGameBoard.result.className = "water-message";
-					playerGameBoard.result.innerHTML = "Água!";		
+					divPlayerMessage.className = "water-message";					
+					divPlayerMessage.innerHTML = "Água!";		
 					
 				} 	
 
-				divMachineGameBoard.insertBefore(playerGameBoard.result, machineTable);
+				divPlayerMessage.className += " float-left";
+				//divMachineGameBoard.insertBefore(playerGameBoard.result, divMachinePoints);
 				setTimeout(function() {
-					divMachineGameBoard.removeChild(playerGameBoard.result);
-					playerGameBoard.result.className = "";
+					divPlayerMessage.className = "";
+					divPlayerMessage.innerHTML = "";
 				},600);	
+
 				
 				playerGameBoard.machineTurn(playerGameBoard, machineGameBoard);						
 			}
@@ -261,7 +264,7 @@ var GameBoard = function() {
 				ships++;
 			}			
 
-			divShips.innerHTML = ships;		
+			divShips.innerHTML = ships;					
 
 			if (ships == 0) {
 				divStartGame.style.display = "block";
@@ -295,17 +298,29 @@ var GameBoard = function() {
 		return false;	
 	};		
 
+	/*
+	* Exibe os navios escondidos
+	*/
 	this.showShips = function(machineGameBoard) {
-		var lines = machineGameBoard.getElementsByTagName("tr");		
+		var lines = machineGameBoard.gameBoardTable.getElementsByTagName("tr");	
+				
 		for (var i = 0; i < lines.length; i++) {			
-			cells = lines[i].getElementsByTagName("td");			
-			for (var j = 0; j < cells.length; j++) {
-				if (cells[j].className == "ship") {					
-					//this.gameBoardTable.getElementById(cells[j].id).className = "ship";
-					alert(cells[j].id);
-				}
+			cells = lines[i].getElementsByTagName("td");				
+			for (var j = 0; j < cells.length; j++) {				
+				if (cells[j].className == "ship") {										
+					lines2 = this.gameBoardTable.getElementsByTagName("tr");
+					for (var x = 0; x < lines2.length; x++){
+						cells2 = lines2[x].getElementsByTagName("td");
+						for (var h = 0; h < cells2.length; h++) {
+							if (cells[j].id == cells2[h].id && cells2[h].className != "bomb") {
+								cells2[h].className = "show-ship";
+							}
+						}
+					}
+
+				}				
 			}
-		}
+		}		
 	};
 }
 
@@ -327,23 +342,24 @@ function startGame(machineGameBoard, playerGameBoard) {
 			)		
 		);
 
-		divInteraction.innerHTML = "Escolha uma posição no tabuleiro adversário";
-
-		//defaultGameBoard.showShips(machineGameBoard);
+		divInteraction.innerHTML = "";		
 
 		run = setInterval(function() {
 			divPlayerPoints.innerHTML = playerGameBoard.points;
-			divPlayerPoints.style.display = "inline";
+			divPlayerPoints.className = "points";
+			divPlayerPoints.className += " float-left"
 
 			divMachinePoints.innerHTML = machineGameBoard.points;
-			divMachinePoints.style.display = "inline";
+			divMachinePoints.className = "points";
+			divMachinePoints.className += " float-right"
 
 			if (machineGameBoard.points == 0 || playerGameBoard.points == 0) {					
 				var mensagem;
 
 				if (machineGameBoard.points == 0) {
 					mensagem = "Vitória!";
-				} else if (playerGameBoard.points == 0) {					
+				} else if (playerGameBoard.points == 0) {	
+					defaultGameBoard.showShips(machineGameBoard);				
 					mensagem = "Derrota.";
 				}
 
